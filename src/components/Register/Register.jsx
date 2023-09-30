@@ -10,14 +10,19 @@ const Register = () => {
 
     const handleRegister = e => {
         e.preventDefault();
-        console.log('Register Clicked');
+        const name = e.target.name.value;
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        const password2 = e.target.password2.value;
+        console.log({name, email, password, password2});
     }
 
     const validatePassword = e => {
         const password = e.target.value;
-        console.log(password);
         setValidPasswordErrMsg('');
-        if (!/[A-Z]/.test(password)) {
+        if (password.length === 0) {
+            setValidPasswordErrMsg('');
+        } else if (!/[A-Z]/.test(password)) {
             setValidPasswordErrMsg('Password must contain at lest one UPPERCASE (A-Z) letter');
         } else if (!/[a-z]/.test(password)) {
             setValidPasswordErrMsg('Password must contain at lest one lowercase (a-z) letter');
@@ -47,7 +52,8 @@ const Register = () => {
                                 <input
                                     type="text"
                                     name="name"
-                                    placeholder="Name"
+                                    required
+                                    placeholder="Your Name"
                                     className="input input-bordered" />
                             </div>
                             <div className="form-control">
@@ -57,6 +63,7 @@ const Register = () => {
                                 <input
                                     type="email"
                                     name="email"
+                                    required
                                     placeholder="Email"
                                     className="input input-bordered" />
                             </div>
@@ -69,19 +76,20 @@ const Register = () => {
                                         type={isPasswordVisible ? "text" : "password"}
                                         onChange={validatePassword}
                                         name="password"
+                                        required
                                         placeholder="Password"
                                         className="input input-bordered w-full" />
                                     <span
                                         onClick={() => setIsPasswordVisible(!isPasswordVisible)}
                                         title={isPasswordVisible ? "Hide Password" : "Show Password"}
-                                        className="absolute top-0 bottom-0 right-0 flex items-center p-3 cursor-pointer text-lg">
+                                        className="absolute password-show-icons-bg">
                                         {
                                             isPasswordVisible ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>
                                         }
                                     </span>
                                 </div>
                             </div>
-                            <div className="form-control relative">
+                            <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Re-type Password</span>
                                 </label>
@@ -89,26 +97,26 @@ const Register = () => {
                                     <input
                                         type={isPasswordVisible ? "text" : "password"}
                                         name="password2"
+                                        required
                                         placeholder="Re-type Password"
                                         className="input input-bordered w-full" />
                                     <span
                                         onClick={() => setIsPasswordVisible(!isPasswordVisible)}
                                         title={isPasswordVisible ? "Hide Password" : "Show Password"}
-                                        className="absolute top-0 bottom-0 right-0 flex items-center p-3 cursor-pointer text-lg">
+                                        className="absolute password-show-icons-bg">
                                         {
                                             isPasswordVisible ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>
                                         }
                                     </span>
                                 </div>
-                                <label className="label">
-                                    <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
-                                </label>
-                                {
-                                    validPasswordErrMsg && <p className="text-red-500 text-xs absolute left-1 -bottom-4">{validPasswordErrMsg}</p>
-                                }
+                                <div className="h-4 relative">
+                                    {
+                                        validPasswordErrMsg && <p className="text-red-500 text-xs absolute left-1 -bottom-3">{validPasswordErrMsg}</p>
+                                    }
+                                </div>
                             </div>
                             <div className="form-control mt-6">
-                                <button className="btn btn-primary disabled">Register</button>
+                                <button type="submit" className="btn btn-primary disabled">Register</button>
                             </div>
                         </form>
                         <div className="mt-2">

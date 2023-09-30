@@ -9,7 +9,9 @@ const LogIn = () => {
 
     const handleLogInSubmit = e => {
         e.preventDefault();
-        console.log('login clicked');
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        console.log({email, password});
     }
 
     return (
@@ -29,6 +31,7 @@ const LogIn = () => {
                                 <input
                                     type="email"
                                     name="email"
+                                    required
                                     placeholder="Email"
                                     className="input input-bordered" />
                             </div>
@@ -40,12 +43,13 @@ const LogIn = () => {
                                     <input
                                         type={isPasswordVisible ? "text" : "password"}
                                         name="password"
+                                        required
                                         placeholder="Password"
                                         className="input input-bordered w-full" />
                                     <span
                                         onClick={() => setIsPasswordVisible(!isPasswordVisible)}
                                         title={isPasswordVisible ? "Hide Password" : "Show Password"}
-                                        className="absolute top-0 bottom-0 right-0 flex items-center p-3 cursor-pointer text-lg">
+                                        className="absolute password-show-icons-bg">
                                         {
                                             isPasswordVisible ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>
                                         }
@@ -56,7 +60,7 @@ const LogIn = () => {
                                 </label>
                             </div>
                             <div className="form-control mt-6">
-                                <button className="btn btn-primary">Login</button>
+                                <button type="submit" className="btn btn-primary">Login</button>
                             </div>
                         </form>
                         <div className="mt-2">

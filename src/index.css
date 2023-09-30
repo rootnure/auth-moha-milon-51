@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.password-show-icons-bg {
+    @apply border border-l-0 border-[#A6ADBA33] top-0 bottom-0 right-0 flex items-center p-3 cursor-pointer text-lg bg-[#1e232a] rounded-lg rounded-l-none;
+}
