@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 
 
 const LogIn = () => {
+
+    const { userSignIn } = useContext(AuthContext);
 
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -12,6 +15,10 @@ const LogIn = () => {
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log({ email, password });
+
+        userSignIn(email, password)
+            .then(res => console.log(res.user))
+            .catch(err => console.error(err))
     }
 
     return (
