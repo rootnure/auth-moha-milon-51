@@ -1,12 +1,14 @@
 import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 
 
 const LogIn = () => {
 
     const { userSignIn } = useContext(AuthContext);
+
+    const navigate = useNavigate();
 
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -17,7 +19,11 @@ const LogIn = () => {
         console.log({ email, password });
 
         userSignIn(email, password)
-            .then(res => console.log(res.user))
+            .then(res => {
+                console.log(res.user)
+                e.target.reset();
+                navigate('/');
+            })
             .catch(err => console.error(err))
     }
 

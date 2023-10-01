@@ -2,7 +2,7 @@
 
 const Orders = () => {
     return (
-        <div>
+        <div className="text-center">
             <h2 className="text-3xl">Your Orders List</h2>
             <ol>
                 <li>Order Item-1</li>
