@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
+import Social from "../Social/Social";
 
 
 const LogIn = () => {
@@ -78,6 +79,7 @@ const LogIn = () => {
                         <div className="mt-2">
                             <p>Don&apos;t have an account? <Link to="/register" className="text-blue-500">Register</Link></p>
                         </div>
+                        <Social />
                     </div>
                 </div>
             </div>

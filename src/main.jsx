@@ -10,10 +10,10 @@ import Root from './components/Root/Root';
 import LogIn from './components/LogIn/LogIn';
 import Register from './components/Register/Register';
 import AuthProvider from './providers/AuthProvider';
-import Orders from './Orders/Orders';
 import PrivateRoute from './routes/PrivateRoute';
-import Profile from './Profile/Profile';
-import Dashboard from './Dashboard/Dashboard';
+import Profile from './components/Profile/Profile';
+import Dashboard from './components/Dashboard/Dashboard';
+import Orders from './components/Orders/Orders';
 
 const router = createBrowserRouter([
   {

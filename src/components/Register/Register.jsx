@@ -1,12 +1,15 @@
 import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
+import Social from "../Social/Social";
 
 
 const Register = () => {
 
     const { createUser } = useContext(AuthContext);
+
+    const navigate = useNavigate();
 
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [passwordErrMsg, setPasswordErrMsg] = useState('');
@@ -21,7 +24,10 @@ const Register = () => {
 
         if (password === password2) {
             createUser(email, password)
-                .then(res => console.log(res.user))
+                .then(res => {
+                    console.log(res.user)
+                    navigate('/');
+                })
                 .catch(err => console.error(err))
         } else {
             setPasswordErrMsg('Enter same password in both password fields.');
@@ -133,6 +139,7 @@ const Register = () => {
                         <div className="mt-2">
                             <p>Already have an account? <Link to="/login" className="text-blue-500">LogIn</Link></p>
                         </div>
+                        <Social />
                     </div>
                 </div>
             </div>

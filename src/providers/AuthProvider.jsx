@@ -1,10 +1,13 @@
 import PropTypes from 'prop-types';
 import { createContext, useEffect, useState } from 'react';
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { GoogleAuthProvider, GithubAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
 import auth from '../firebase/firebase.config';
 
 
 export const AuthContext = createContext(null);
+
+const googleProvider = new GoogleAuthProvider();
+const githubProvider = new GithubAuthProvider();
 
 const AuthProvider = ({ children }) => {
 
@@ -36,6 +39,18 @@ const AuthProvider = ({ children }) => {
         return signInWithEmailAndPassword(auth, email, password)
     }
 
+    // sign in with media shortcut function to pass using context & use by children
+    const googleLogIn = () => {
+        setLoading(true);
+        return signInWithPopup(auth, googleProvider)
+    }
+
+    // sign in with media shortcut function to pass using context & use by children
+    const githubLogIn = () => {
+        setLoading(true);
+        return signInWithPopup(auth, githubProvider)
+    }
+
     // sign out user function to sign out user
     const logOut = () => {
         setLoading(true);
@@ -48,7 +63,9 @@ const AuthProvider = ({ children }) => {
         loading,
         createUser,
         userSignIn,
-        logOut
+        logOut,
+        googleLogIn,
+        githubLogIn
     }
 
     return (
