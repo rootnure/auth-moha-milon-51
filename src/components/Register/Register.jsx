@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 
 
 const Register = () => {
 
+    const { createUser } = useContext(AuthContext);
+
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-    const [validPasswordErrMsg, setValidPasswordErrMsg] = useState('');
+    const [passwordErrMsg, setPasswordErrMsg] = useState('');
 
     const handleRegister = e => {
         e.preventDefault();
@@ -14,24 +17,33 @@ const Register = () => {
         const email = e.target.email.value;
         const password = e.target.password.value;
         const password2 = e.target.password2.value;
-        console.log({name, email, password, password2});
+        console.log({ name, email, password, password2 });
+
+        if (password === password2) {
+            createUser(email, password)
+                .then(res => console.log(res.user))
+                .catch(err => console.error(err))
+        } else {
+            setPasswordErrMsg('Enter same password in both password fields.');
+            return;
+        }
     }
 
     const validatePassword = e => {
         const password = e.target.value;
-        setValidPasswordErrMsg('');
+        setPasswordErrMsg('');
         if (password.length === 0) {
-            setValidPasswordErrMsg('');
+            setPasswordErrMsg('');
         } else if (!/[A-Z]/.test(password)) {
-            setValidPasswordErrMsg('Password must contain at lest one UPPERCASE (A-Z) letter');
+            setPasswordErrMsg('Password must contain at lest one UPPERCASE (A-Z) letter');
         } else if (!/[a-z]/.test(password)) {
-            setValidPasswordErrMsg('Password must contain at lest one lowercase (a-z) letter');
+            setPasswordErrMsg('Password must contain at lest one lowercase (a-z) letter');
         } else if (!/[0-9]/.test(password)) {
-            setValidPasswordErrMsg('Password must contain at lest one digit (0-9)');
+            setPasswordErrMsg('Password must contain at lest one digit (0-9)');
         } else if (!/[!@#$%^&*()_+\-=[\]{};'~`:"\\|,.<>/?]/.test(password)) {
-            setValidPasswordErrMsg('Password must contain at lest one special character');
+            setPasswordErrMsg('Password must contain at lest one special character');
         } else if (password.length < 6) {
-            setValidPasswordErrMsg('Password must be at lest 6 character long');
+            setPasswordErrMsg('Password must be at lest 6 character long');
         }
     }
 
@@ -110,7 +122,7 @@ const Register = () => {
                                 </div>
                                 <div className="h-4 relative">
                                     {
-                                        validPasswordErrMsg && <p className="text-red-500 text-xs absolute left-1 -bottom-3">{validPasswordErrMsg}</p>
+                                        passwordErrMsg && <p className="text-red-500 text-xs absolute left-1 -bottom-3">{passwordErrMsg}</p>
                                     }
                                 </div>
                             </div>
