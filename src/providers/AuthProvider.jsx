@@ -10,10 +10,14 @@ const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState(null);
 
+    // handle page reload by user
+    const [loading, setLoading] = useState(true);
+
     // observer functionality
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
+            setLoading(false);
             console.log('inside on auth state changed', currentUser);
         });
 
@@ -22,22 +26,26 @@ const AuthProvider = ({ children }) => {
 
     // create user shortcut function to pass using context & use by children
     const createUser = (email, password) => {
+        setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
     // sing in user shortcut function to pass using context & use by children
     const userSignIn = (email, password) => {
+        setLoading(true);
         return signInWithEmailAndPassword(auth, email, password)
     }
 
     // sign out user function to sign out user
     const logOut = () => {
+        setLoading(true);
         return signOut(auth);
     }
 
     // context value
     const authInfo = {
         user,
+        loading,
         createUser,
         userSignIn,
         logOut
